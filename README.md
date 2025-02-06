@@ -1,0 +1,49 @@
+# chickenscratch
+sharing notes on configuration hell sort of things...
+
+> [!NOTE]
+> run `bash updaterc.sh` to append this repo's `bashrc` and `vimrc` to your `~/.bashrc` and `~/.vimrc`
+
+## Bash
+
+### [~/.bashrc](/bash/example.bashrc)
+- clear scrollback with `Alt+L`
+- shows git branch if relevant
+  - feel free to remove `\$(__git_ps1)`
+- thick cursor for visibility
+- up and down arrows search through history contextually
+  - i.e. 'vi ' + up/down will cycle through your 'vi ' command history
+
+## Vim
+
+### [~/.vimrc](/vim/example.vimrc)
+- for vim-enhanced (supports mouse & explorer -- if unavailable, use nano instead)
+- has mouse support
+- has nice colorscheme
+- has helpful shortcuts
+  - type 'h' to show helpful shortcuts nano-style
+  - including in-file replace func (supports regex)
+
+## Nano
+
+### [~/.nanorc](/nano/example.nanorc)
+- has mouse support
+- has nice colorscheme
+- a less considered rc than vimrc
+  - still easier to use than defaults
+
+## Django
+
+### [admin.py](/django/admin.example.py)
+- a modification of admin dashboard
+- `super_seer` and `super_privileged` groups
+  - `super_privileged`: has superuser privileges in their permissions
+    - if not in group, sees limited amount of info about user
+  - `super_seer`: sees other superusers as well as elevated groups
+    - elevated\_groups are currently `super_seer` and `super_privileged` groups
+
+### [requirements.txt](/django/requirements.txt)
+- if using sqlite, you may remove `psycopg2-binary==2.9.10` from `requirements.txt`
+- this is Django 4.2.18 so versioning won't match for Django 5
+  - commands: `pip install --upgrade pip setuptools wheel && pip install whitenoise "django-allauth[socialaccount]" psycopg2-binary`
+  - after success: `pip freeze > requirements.txt`
