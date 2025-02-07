@@ -30,12 +30,6 @@ export HISTIGNORE="cd*:ls*"
 bind '"\e[A": history-search-backward'  # up-arrow: older command-specific history
 bind '"\e[B": history-search-forward'  # down-arrow: newer command-specific history
 
-clear_scrollback() {  # completely erase scrollback
-    printf '\033[2J\033[3J\033[H'
-    eval "$PROMPT_COMMAND"
-}
-bind -x '"\el": clear_scrollback' # alt-l as in lunch
-
 # helper funcs
 code() {  # open with preferred code editor
     command "${VISUAL:-${EDITOR:-$(command -v vim || command -v vi || command -v nano)}}" "$@"
