@@ -26,6 +26,10 @@ export HISTFILESIZE=600
 export HISTCONTROL=erasedups
 export HISTIGNORE="cd*:ls*"
 
+# clear screen and scrollback
+clear_screen() { printf "\033[2J\033[3J\033[H"; }
+bind -x '"\el": clear_screen'
+
 # bindings
 bind '"\e[A": history-search-backward'  # up-arrow: older command-specific history
 bind '"\e[B": history-search-forward'  # down-arrow: newer command-specific history
