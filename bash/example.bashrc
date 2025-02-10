@@ -44,4 +44,15 @@ how() {  # quick help from man, default focus on flags/options
     man "$1" | col -b | grep -i -- "${2:-[^a-z]-[a-z]}" && [ $# -gt 2 ] && echo -e "\n>> INFO >> how accepts 1 or 2 args <<"
 }
 
+# Running `wsl ~` from command prompt grants access to windows utilities
+wcopy() {
+    cat "$1" | clip.exe
+}
+
+alias wpaste='powershell.exe Get-Clipboard'
+
+# nnn, preferred file explorer
+alias nnn='nnn -e' # always open files with EDITOR
+# export EDITOR=micro # or vim, nano, etc.
+
 #</ ADDITIONS >#
