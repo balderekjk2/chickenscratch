@@ -2,7 +2,7 @@
 
 sharing notes on configuration hell sort of things
 
-## Newcomers
+## newcomers
 
 - check if you have `micro` and `nnn` available through your Linux disto's package manager i.e. apt, yum, etc
 - if you do install both i.e. `sudo apt install micro nnn`
@@ -12,14 +12,14 @@ sharing notes on configuration hell sort of things
 - hit right-arrow or enter key to edit file with micro, or double-click
 - exit micro with "ctrl-q", or nnn with "q"
 
-## For those who prefer to learn vim
+## for those who prefer to learn vim
 
 - vim is a lot more easily configurable, but not as accessible to newcomers
 
 > [!NOTE]
 > run `bash updaterc.sh` to append this repo's `bashrc` and `vimrc` to your `~/.bashrc` and `~/.vimrc`
 
-## Bash
+## bash
 
 ### [~/.bashrc](/bash/example.bashrc)
 - clear scrollback with `Alt+L`
@@ -29,7 +29,7 @@ sharing notes on configuration hell sort of things
 - up and down arrows search through history contextually
   - i.e. 'vi ' + up/down will cycle through your 'vi ' command history
 
-## Vim
+## vim
 
 ### [~/.vimrc](/vim/example.vimrc)
 - for vim-enhanced (supports mouse & explorer -- if unavailable, use nano instead)
@@ -39,7 +39,7 @@ sharing notes on configuration hell sort of things
   - type 'h' to show helpful shortcuts nano-style
   - including in-file replace func (supports regex)
 
-## Nano
+## nano
 
 ### [~/.nanorc](/nano/example.nanorc)
 - has mouse support
@@ -47,7 +47,7 @@ sharing notes on configuration hell sort of things
 - a less considered rc than vimrc
   - still easier to use than defaults
 
-## Django
+## django
 
 ### [admin.py](/django/admin.example.py)
 - a modification of admin dashboard
