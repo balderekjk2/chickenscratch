@@ -69,34 +69,27 @@ s() {
 }
 
 _s_completion() {
-    local cur prev words cword
+    local cur
     _init_completion || return
 
-    cur="${words[cword]}"
-    prev="${words[cword-1]}"
+    cur="${COMP_WORDS[COMP_CWORD]}"
 
-    # Handle the "-c" flag case
-    if [[ ${words[1]} == "-c" ]]; then
-        if [[ $cword -eq 2 ]]; then
-            COMPREPLY=( $(compgen -A command -- "$cur") )
-            return 0
-        fi
-    fi
+    # Fetch completions via SSH
+    local IFS=$'\n'
+    local -a completions
+    completions=($(ssh "$RAH" compgen -A file -- "$cur"))
 
-    # If first argument is a flag, suggest valid options
-    if [[ $cword -eq 1 && $cur == -* ]]; then
-        COMPREPLY=( $(compgen -W "-c" -- "$cur") )
+    # If there's only one completion, append it directly
+    if [[ ${#completions[@]} -eq 1 ]]; then
+        COMPREPLY=( "${completions[0]}" )
         return 0
     fi
 
-    # Use SSH to fetch completions and extract only filenames (no paths)
-    if [[ $cword -gt 1 ]]; then
-        # Fetch completions via SSH and extract just the filenames using `awk`
-        COMPREPLY=( $(
-            ssh "$RAH" compgen -A file -- "$cur" | awk -F/ '{print $NF}'
-        ) )
-        return 0
-    fi
+    # Otherwise, provide completions as filenames only
+    COMPREPLY=()
+    for path in "${completions[@]}"; do
+        COMPREPLY+=( "${path##*/}" )
+    done
 }
 
 complete -F _s_completion s
