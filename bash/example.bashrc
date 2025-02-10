@@ -1,6 +1,9 @@
 
 #< ADDITIONS >#
 
+# return if non-interactive shell
+[[ $- != *i* ]] && return
+
 # source global definitions
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
@@ -54,5 +57,48 @@ alias wpaste='powershell.exe Get-Clipboard'
 # nnn, preferred file explorer
 alias nnn='nnn -e' # always open files with EDITOR
 # export EDITOR=micro # or vim, nano, etc.
+
+# ssh from within shell to harness benefits of universal clipboard if X11 is not possible
+s() {
+    if [[ "$1" == "-c" ]]; then
+        shift
+        ssh "$RAH" "$@" | tee >(clip.exe)
+    else
+        ssh "$RAH" "$@"
+    fi
+}
+
+_s_completion() {
+    local cur prev words cword
+    _init_completion || return
+
+    cur="${words[cword]}"
+    prev="${words[cword-1]}"
+
+    # Handle the "-c" flag case
+    if [[ ${words[1]} == "-c" ]]; then
+        if [[ $cword -eq 2 ]]; then
+            COMPREPLY=( $(compgen -A command -- "$cur") )
+            return 0
+        fi
+    fi
+
+    # If first argument is a flag, suggest valid options
+    if [[ $cword -eq 1 && $cur == -* ]]; then
+        COMPREPLY=( $(compgen -W "-c" -- "$cur") )
+        return 0
+    fi
+
+    # Use SSH to fetch completions and extract only filenames (no paths)
+    if [[ $cword -gt 1 ]]; then
+        # Fetch completions via SSH and extract just the filenames using `awk`
+        COMPREPLY=( $(
+            ssh "$RAH" compgen -A file -- "$cur" | awk -F/ '{print $NF}'
+        ) )
+        return 0
+    fi
+}
+
+complete -F _s_completion s
 
 #</ ADDITIONS >#
