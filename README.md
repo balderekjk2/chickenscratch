@@ -1,6 +1,16 @@
 # chickenscratch
 sharing notes on configuration hell sort of things...
 
+## Newcomers
+
+- check if you have `micro` and `nnn` available through your Linux disto's package manager i.e. apt, yum, etc.
+- if you do install both i.e. `sudo apt install micro nnn`
+- `export EDITOR=micro` in command line
+- `echo alias nnn='nnn -e' >> ~/.bashrc`
+- whenever you run `nnn` it will open up file explorer in current dir. Navigate with mouse or left/right arrows.
+- hit right-arrow or enter key to edit file with micro, or double-click
+- to quit micro, just "ctrl-q".
+
 > [!NOTE]
 > run `bash updaterc.sh` to append this repo's `bashrc` and `vimrc` to your `~/.bashrc` and `~/.vimrc`
 
