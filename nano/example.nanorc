@@ -3,23 +3,16 @@ set mouse  # Enable mouse support, Shift + clickdrag to highlight selection for 
 set constantshow  # Always show cursor position, "set const" on older versions
 set tabsize 4  # Set tab width to 4
 set autoindent  # Enable autoindent
+set casesensitive  # Case sensitive search
 set brackets ""')>]}"  # Match these brackets
 set matchbrackets "(<[{)>]}"  # Match these brackets
-set casesensitive  # Case sensitive search
-#set linenumbers  # Turn off with Alt + #, to not catch numbers when copying
+#set linenumbers  # Turn off with Alt-#, to not catch numbers when copying
 #set softwrap  # Soft wrap lines
-#set undo  # older version flag
+#set undo  # Only necessary for older versions, Alt-u
 
 set multibuffer # Multiple tabs, open explorer with Ctrl+r,Ctrl+t
                 # click desired file to edit
                 # switch between tabs with Alt+> or Alt+<
 
-# Syntax highlighting - include all common syntaxes
-include "/usr/share/nano/asm.nanorc"
-include "/usr/share/nano/c.nanorc"
-include "/usr/share/nano/html.nanorc"
-include "/usr/share/nano/java.nanorc"
-include "/usr/share/nano/python.nanorc"
-include "/usr/share/nano/sh.nanorc"
-include "/usr/share/nano/xml.nanorc"
-#include "~/.local/share/nano/js.nanorc"
+# Syntax highlighting - wherever available by default
+include "/usr/share/nano/*.nanorc"
