@@ -11,6 +11,8 @@ sharing notes on configuration hell sort of things...
 - hit right-arrow or enter key to edit file with micro, or double-click
 - to quit micro, just "ctrl-q".
 
+## If you prefer to adopt vim (a lot more easily configurable, but not as accessible to newcomers)
+
 > [!NOTE]
 > run `bash updaterc.sh` to append this repo's `bashrc` and `vimrc` to your `~/.bashrc` and `~/.vimrc`
 
