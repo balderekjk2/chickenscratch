@@ -60,9 +60,8 @@ alias nnn='nnn -e' # always open files with EDITOR
 
 # ssh from within shell to harness benefits of universal clipboard if X11 is not possible
 s() {
-    if [[ "$1" == "-c" ]]; then
-        shift
-        ssh "$RAH" "$@" | tee >(clip.exe)
+    if [[ "${!#}" == "-c" ]]; then
+        ssh "$RAH" "${@:1:$#-1}" | tee >(clip.exe) | { head -n 20; echo -e '--------------------\n(all content copied)'; cat >/dev/null; }
     else
         ssh "$RAH" "$@"
     fi
