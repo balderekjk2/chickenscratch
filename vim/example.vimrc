@@ -10,7 +10,7 @@ set visualbell  " no annoying error sounds
 set t_vb=
 
 set hlsearch  " highlight matches
-colorscheme koehler  " better general colorscheme
+colorscheme murphy  " better general colorscheme
 
 set tabstop=4  " four-space indentation is convention
 set softtabstop=4
