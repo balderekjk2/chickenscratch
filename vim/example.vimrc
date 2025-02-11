@@ -118,4 +118,17 @@ function! ShiftTab(bynum)
 endfunction
 nnoremap <silent> <leader>st :call ShiftTab(input('shift='))<CR>
 
+function! AdjustLeadingWhitespace()
+    let line = getline('.')
+    let len_spaces = len(matchstr(line, '^\s\+'))
+    if len_spaces
+        let newcount = input('new count:')
+        call feedkeys(":%s/^ \\{" . len_spaces . "\\}/ \\{" . newcount . "\\}/\r", 'n')
+    else
+        call feedkeys("\<C-l>", 'n')
+    endif
+endfunction
+
+command! Lin call AdjustLeadingWhitespace()
+
 "</ ADDITIONS >"
