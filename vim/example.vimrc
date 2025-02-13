@@ -18,10 +18,10 @@ set shiftwidth=4
 set expandtab  " expand tab into spaces, four spaces per tab
 set autoindent
 set autoread  " refresh on outside changes
-au FocusGained,BufEnter * silent! checktime
+au FocusGained,BufEnter * silent! checktime"filetype plugin indent on
 filetype plugin indent on
 syntax on
-au FileType css,md,yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab  " different defaults for specific filetypes
+au FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab  " different defaults for specific filetypes
 
 "< PLUGINS >"
 let data_dir = expand('~/.vim')
@@ -49,7 +49,7 @@ let g:pymode_indent = 0
 "let mapleader=','  " default <leader> is '\' backslash
 set timeoutlen=2500  " increase time to hit consecutive keys in command
 
-nnoremap qr q                              " unset annoying shortcuts
+nnoremap qr q|                             " unset annoying shortcuts
 nnoremap q <Nop>
 nnoremap Q <Nop>
 vnoremap <C-z> <Nop>
@@ -75,7 +75,7 @@ nnoremap y yy|                             " y for yank/copy
 nnoremap J G$|                             " J for move to end of file
 nnoremap K gg|                             " K for move to start of file
 nnoremap j 3j|                             " j for move down 3 lines
-nnoremap ' k|                              " ' for move up 3 lines
+nnoremap ' k|
 
 function! Help()  " h for help (if mappings change, this must be updated)
     echom '------------'
@@ -84,7 +84,7 @@ function! Help()  " h for help (if mappings change, this must be updated)
     echom printf('%-26s %-26s %-26s %-26s %-26s %-26s', '[i] Write', '(^z)[u] Undo', '[^r]: Redo', '(^o)[:w!] Save', '(^q)[:q] Quit/save?', '(M-q)[:qa] Quit all/save?')
     echom printf('%-53s %-53s %-53s', '(^t)[:Tex] Tab explorer', '(M-left)[:tabp] Prev tab', '(M-right)[:tabn] Next tab')
 endfunction
-nnoremap <silent> h :call Help()<CR>|      " h is help
+nnoremap <silent> h :call Help()<CR>|   " h is help
 nnoremap <silent> <Esc>h :echo system("echo '------------'; grep -E '^.noremap ' ~/.vimrc")<CR>
 command! -nargs=* Twref echo "------------\n" . trim(system('twref ' . shellescape(<q-args>)))
 
@@ -98,37 +98,46 @@ function! Replace(selection, with)
 endfunction
 nnoremap <silent> <leader>fr :call Replace(input('replace (lead with ''/'' for regex):'), input('with:'))<CR>
 
-function! AutoIndent(double)
+function! ScaleIndent(double)
     let l:lines = line('$')
     for l:lnum in range(1, l:lines)
         let l:line = getline(l:lnum)
-        let l:indent = len(matchstr(l:line, '^\s*'))
-        if l:indent > 0
-            let l:new_indent = a:double ? l:indent * 2 : max([1, l:indent / 2])
+        let l:indent = len(matchstr(l:line, '^\s\+'))
+        if !a:double && l:indent == 2
+            return
+        else
+            let l:new_indent = a:double ? l:indent * 2 : max([0, l:indent / 2])
             call setline(l:lnum, repeat(' ', l:new_indent) . substitute(l:line, '^\s*', '', ''))
         endif
     endfor
 endfunction
-nnoremap <silent> <Esc>= :call AutoIndent(1)<CR>
-nnoremap <silent> <Esc>- :call AutoIndent(0)<CR>
+nnoremap <silent> <Esc>= :call ScaleIndent(1)<CR>
+nnoremap <silent> <Esc>- :call ScaleIndent(0)<CR>
 
-function! ShiftTab(bynum)
-    execute 'set shiftwidth=' . a:bynum
-    execute 'set softtabstop=' . a:bynum
+function! ShiftWidth(bynum)
+    if !empty(a:bynum) && a:bynum =~ '^[2468]$'
+        execute 'set shiftwidth=' . a:bynum
+        execute 'set softtabstop=' . a:bynum
+    else
+        echom " "
+        echom "only 2, 4, 6, or 8 accepted"
+    endif
 endfunction
-nnoremap <silent> <leader>st :call ShiftTab(input('shift='))<CR>
+nnoremap <silent> <leader>sw :call ShiftWidth(input('shift='))<CR>
 
-function! AdjustLeadingWhitespace()
+function! AdjLWS()
     let line = getline('.')
     let len_spaces = len(matchstr(line, '^\s\+'))
     if len_spaces
-        let newcount = input('new count:')
-        call feedkeys(":%s/^ \\{" . len_spaces . "\\}/ \\{" . newcount . "\\}/\r", 'n')
+        let newcount = input('indents applied:')
+        if !empty(newcount) && newcount =~ '^[1-6]$'
+            call feedkeys(":%s/^ \\{" . len_spaces . "\\}/\\=repeat(' ', " . (&shiftwidth * newcount) . ")/\r", 'n')
+        endif
     else
         call feedkeys("\<C-l>", 'n')
     endif
 endfunction
 
-command! Lin call AdjustLeadingWhitespace()
+nnoremap <silent> <leader>aw :call AdjLWS()<CR>
 
 "</ ADDITIONS >"
