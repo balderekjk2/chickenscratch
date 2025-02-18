@@ -60,7 +60,7 @@ nnoremap <silent> <leader>t :Tex<CR>
 nnoremap <silent> <Esc><Left> :tabp<CR>|   " alt-left for prev tab
 nnoremap <silent> <Esc><Right> :tabn<CR>|  " alt-right for next tab
 nnoremap <silent> <C-o> :w!<CR>|           " ctrl-o for overwrite
-inoremap <silent> <C-o> <Esc>:w!i<CR>
+inoremap <silent> <C-o> <Esc>:w!<CR>a
 nnoremap <silent> <leader>o :w!<CR>
 nnoremap <silent> <C-q> :q<CR>|            " ctrl-q for quit/save?
 inoremap <silent> <C-q> <Esc>:q<CR>
@@ -69,9 +69,9 @@ nnoremap <silent> <Esc>q :qa<CR>|          " alt-q for close all
 inoremap <silent> <Esc>q <Esc>:qa<CR>
 nnoremap <silent> <leader>Q :qa<CR>
 nnoremap <C-z> u|                          " ctrl-z for undo
-inoremap <C-z> <Esc>ui
-nnoremap <RightMouse> :set paste mouse=<CR>a
-nnoremap <Esc><Esc> :set nopaste mouse=a<CR>
+inoremap <C-z> <Esc>ua
+nnoremap `1 :set paste mouse=<CR>a
+nnoremap 2 :set nopaste mouse=a \| echo 'mouse enabled'<CR>
 
 nnoremap y yy|                             " y for yank/copy
 nnoremap J G$|                             " J for move to end of file
