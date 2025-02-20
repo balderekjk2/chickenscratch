@@ -71,7 +71,7 @@ nnoremap <silent> <leader>Q :qa<CR>
 nnoremap <C-z> u|                          " ctrl-z for undo
 inoremap <C-z> <Esc>ua
 nnoremap `1 :set paste mouse=<CR>a
-nnoremap 2 :set nopaste mouse=a \| echo 'mouse enabled'<CR>
+nnoremap <Esc>2 :set nopaste mouse=a \| echo 'mouse enabled'<CR>
 
 nnoremap y yy|                             " y for yank/copy
 nnoremap J G$|                             " J for move to end of file
