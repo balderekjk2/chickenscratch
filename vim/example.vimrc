@@ -62,12 +62,12 @@ nnoremap <silent> <Esc><Right> :tabn<CR>|  " alt-right for next tab
 nnoremap <silent> <C-o> :w!<CR>|           " ctrl-o for overwrite
 inoremap <silent> <C-o> <Esc>:w!<CR>a
 nnoremap <silent> <leader>o :w!<CR>
-nnoremap <silent> <C-q> :q<CR>|            " ctrl-q for quit/save?
-inoremap <silent> <C-q> <Esc>:q<CR>
-nnoremap <silent> <leader>q :q<CR>
-nnoremap <silent> <Esc>q :qa<CR>|          " alt-q for close all
-inoremap <silent> <Esc>q <Esc>:qa<CR>
-nnoremap <silent> <leader>Q :qa<CR>
+nnoremap <silent> <C-x> :q<CR>|            " ctrl-x for exit/save?
+inoremap <silent> <C-x> <Esc>:q<CR>
+nnoremap <silent> <leader>x :q<CR>
+nnoremap <silent> <Esc>x :qa<CR>|          " alt-x for exit all
+inoremap <silent> <Esc>x <Esc>:qa<CR>
+nnoremap <silent> <leader>X :qa<CR>
 nnoremap <C-z> u|                          " ctrl-z for undo
 inoremap <C-z> <Esc>ua
 nnoremap `1 :set paste mouse=<CR>a
