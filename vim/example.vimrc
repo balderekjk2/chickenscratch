@@ -1,25 +1,25 @@
 
 "< ADDITIONS >"
 
-set nocompatible  " vim defaults
-set mouse=a  " mouse support, shift + clickdrag to highlight and/or copy selections
-set bs=indent,eol,start  " reliable backspacing
-set confirm  " confirm save on exit
+set nocompatible
+set mouse=a
+set bs=indent,eol,start
+set confirm
 
-set hlsearch  " highlight matches
-colorscheme murphy  " better general colorscheme
+set hlsearch
+colorscheme murphy
 
-set tabstop=4  " four-space indentation is convention
+set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab  " expand tab into spaces, four spaces per tab
+set expandtab
 set autoindent
 
 syntax on
 filetype plugin indent on
-au FileType css,yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab  " different defaults for specific filetypes
+au FileType css,yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
-set timeoutlen=1500  " increase time to hit consecutive keys in command
+set timeoutlen=1500
 
 nnoremap <C-z> <Nop>
 vnoremap <C-z> <Nop>
