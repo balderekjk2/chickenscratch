@@ -1,18 +1,7 @@
-# Basic settings
-set mouse  # Enable mouse support, Shift + clickdrag to highlight selection for copying
-set constantshow  # Always show cursor position, "set const" on older versions
-set tabsize 4  # Set tab width to 4
-set autoindent  # Enable autoindent
-set casesensitive  # Case sensitive search
-set brackets ""')>]}"  # Match these brackets
-set matchbrackets "(<[{)>]}"  # Match these brackets
-#set linenumbers  # Turn off with Alt-#, to not catch numbers when copying
-#set softwrap  # Soft wrap lines
-#set undo  # Only necessary for older versions, Alt-u
-
-set multibuffer # Multiple tabs, open explorer with Ctrl+r,Ctrl+t
-                # click desired file to edit
-                # switch between tabs with Alt+> or Alt+<
-
-# Syntax highlighting - wherever available by default
+set mouse
+set multibuffer
+set tabsize 4
+set autoindent
+set casesensitive
 include "/usr/share/nano/*.nanorc"
+#include "~/.nano/*.nanorc"
