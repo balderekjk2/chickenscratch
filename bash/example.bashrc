@@ -19,10 +19,9 @@ export HISTCONTROL=erasedups
 
 # NEW COMMANDS
 clear_screen() { printf "\033[2J\033[3J\033[H"; }
-one="${1:-help}"
 how() {
-    [ $one == "help" ] && { help help | { less || more || cat; }; } && return
-    { $one --help || $one -h || { man $one | grep -iA 1 "^ *\-[a-z]"; }; } | { less || more || cat; }
+    [ $1 == "help" ] && { help help | { less || more || cat; }; } && return
+    { $1 --help || $1 -h || { man $1 | grep -iA 1 "^ *\-[a-z]"; }; } | { less || more || cat; }
 }
 
 bind '"\e[A": history-search-backward'
