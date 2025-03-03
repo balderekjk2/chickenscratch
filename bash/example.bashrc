@@ -1,96 +1,54 @@
 
 #< ADDITIONS >#
 
-# return if non-interactive shell
+# RETURN IF NONINTERACTIVE
 [[ $- != *i* ]] && return
 
-# source global definitions
+# SOURCE GLOBAL BASHRC
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-# load local bin in path if not yet in path
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+# LOAD LOCAL COMMANDS
+export PATH="$HOME/.local/bin:$PATH"
+
+# KRB5 CONFIG
+export KRB5_CONFIG=/usr/local/krb5/etc/krb5.conf
+export PATH="/usr/local/krb5/bin:/usr/local/ossh/bin:$PATH"
+export PATH=$PATH:/usr/sbin:/usr/sbin/iptables:/usr/sbin/ip6tables
+
+# PYENV CONFIG
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
 fi
-export PATH
 
-# thick cursor
+# NVM CONFIG
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# PERSONAL
 echo -ne "\e[2 q"
-
-# alter user@host to be a little more readable
-export PS1="[\u@\h\[\033[01;36m\] \w\$(__git_ps1)\[\033[00m\]]\$ "
-# export PS1="[\u@\h\[\033[01;36m\] \w\[\033[00m\]]\$ "  # if __git_ps1 not recognized
-
-# history preferences, erase duplicates
-export HISTSIZE=200
-export HISTFILESIZE=600
+export PS1="[\u@\h\[\033[01;36m\] \w\[\033[00m\]]\$ " #\$(__git_ps1)
 export HISTCONTROL=erasedups
-export HISTIGNORE="cd*:ls*"
 
-# clear screen and scrollback
+one="${1:-help}" # GLOBAL FIRST ARG
+
 clear_screen() { printf "\033[2J\033[3J\033[H"; }
+how() {
+    [ $one == "help" ] && { help help | { less || more || cat; }; } && return
+    { $one --help || $one -h || { man $one | grep -iA 1 "^ *\-[a-z]"; }; } | { less || more || cat; }
+}
+
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
 bind -x '"\el": clear_screen'
 
-# bindings
-bind '"\e[A": history-search-backward'  # up-arrow: older command-specific history
-bind '"\e[B": history-search-forward'  # down-arrow: newer command-specific history
-
-# helper funcs
-code() {  # open with preferred code editor
-    command "${VISUAL:-${EDITOR:-$(command -v vim || command -v vi || command -v nano)}}" "$@"
-}
-
-how() {  # quick help from man, default focus on flags/options
-    [[ -z "$1" || "$1" == "-h" || "$1" == "--help" ]] && { echo -e "Usage  : how [command] [pattern]\nSimple : how grep\nFull   : how grep '-r'"; return; }
-    man "$1" | col -b | grep -i -- "${2:-[^a-z]-[a-z]}" && [ $# -gt 2 ] && echo -e "\n>> INFO >> how accepts 1 or 2 args <<"
-}
-
-# Running `wsl ~` from command prompt grants access to windows utilities
-wcopy() {
-    cat "$1" | clip.exe
-}
-
-alias wpaste='powershell.exe Get-Clipboard'
-
-# nnn, preferred file explorer
-alias nnn='nnn -e' # always open files with EDITOR
-# export EDITOR=micro # or vim, nano, etc.
-
-# ssh from within shell to harness benefits of universal clipboard if X11 is not possible
-s() {
-    if [[ "${!#}" == "-c" ]]; then
-        ssh "$RAH" "${@:1:$#-1}" | tee >(clip.exe) | { head -n 20; echo -e '--------------------\n(all content copied)'; cat >/dev/null; }
-    else
-        ssh "$RAH" "$@"
-    fi
-}
-
-_s_completion() {
-    local cur
-    _init_completion || return
-
-    cur="${COMP_WORDS[COMP_CWORD]}"
-
-    # Fetch completions via SSH
-    local IFS=$'\n'
-    local -a completions
-    completions=($(ssh "$RAH" compgen -A file -- "$cur"))
-
-    # If there's only one completion, append it directly
-    if [[ ${#completions[@]} -eq 1 ]]; then
-        COMPREPLY=( "${completions[0]}" )
-        return 0
-    fi
-
-    # Otherwise, provide completions as filenames only
-    COMPREPLY=()
-    for path in "${completions[@]}"; do
-        COMPREPLY+=( "${path##*/}" )
-    done
-}
-
-complete -F _s_completion s
+alias cato="bat -p"
+alias nnna="nnn -eH"
+alias lynxo="lynx -use_mouse"
+export PATH=$PATH:/var/lib/snapd/snap/bin
 
 #</ ADDITIONS >#
