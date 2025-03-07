@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  main {
+    @apply max-w-[1600px] w-[calc(100%-20px)] mx-auto;
+    h1:not(.not-prose, .not-prose *) {
+      @apply text-[3.5rem] mb-9 font-semibold leading-[1];
+      &:has(+ h1) {
+        @apply mb-0;
+      }
+    }
+    h2:not(.not-prose, .not-prose *) {
+      @apply text-4xl mb-7 font-semibold;
+      &:has(+ h2) {
+        @apply mb-0;
+      }
+    }
+    h3:not(.not-prose, .not-prose *) {
+      @apply text-3xl mb-5 font-semibold;
+      &:has(+ h3) {
+        @apply mb-0;
+      }
+    }
+    h4:not(.not-prose, .not-prose *) {
+      @apply text-2xl mb-4 font-semibold;
+      &:has(+ h4) {
+        @apply mb-0;
+      }
+    }
+    h5:not(.not-prose, .not-prose *) {
+      @apply text-xl mb-4 font-semibold;
+      &:has(+ h5) {
+        @apply mb-0;
+      }
+    }
+    h6:not(.not-prose, .not-prose *) {
+      @apply mb-4 font-semibold text-lg;
+      &:has(+ h6) {
+        @apply mb-0;
+      }
+    }
+    p:not(.not-prose, .not-prose *) {
+      @apply mb-3 text-lg;
+    }
+    ul:not(.not-prose, .not-prose *) {
+      @apply list-disc list-inside text-lg;
+      ul {
+        @apply list-[circle] list-inside ml-4;
+      }
+      ol {
+        @apply list-[lower-latin] list-inside ml-4;
+      }
+    }
+    ol:not(.not-prose, .not-prose *) {
+      @apply list-decimal list-inside text-lg;
+      ol {
+        @apply list-[lower-latin] list-inside ml-4;
+      }
+      ul {
+        @apply list-[circle] list-inside ml-4;
+      }
+    }
+    blockquote:not(.not-prose, .not-prose *) {
+      @apply border-l-4 border-slate-500;
+      > * {
+        @apply ml-3;
+      }
+    }
+  }
+  label {
+    span:has(+ *:required) {
+      @apply after:content-['_(required)'] after:text-slate-500;
+    }
+  }
+  input {
+    @apply mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-base
+    max-h-[calc(40px+0.5rem)];
+  }
+}
+
+@layer utilities {
+  .grid-2121 {
+    @apply md:[grid-template-columns:2fr_1fr_2fr_1fr];
+  }
+  .grid-1111 {
+    @apply md:[grid-template-columns:1fr_1fr_1fr_1fr];
+  }
+  .grid-111 {
+    @apply md:[grid-template-columns:1fr_1fr_1fr];
+  }
+  .grid-11 {
+    @apply md:[grid-template-columns:1fr_1fr];
+  }
+}
+
+-----
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{html,js}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [require("@tailwindcss/forms")],
+};
+
+-----
+
+  "scripts": {
+    "dev": "concurrently \"postcss src/dev.css -o src/prod.css --watch\" \"live-server ./src\"",
+    "build": "postcss src/dev.css -o dist/prod.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "live-server": "^1.2.2",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.17"
+  }
