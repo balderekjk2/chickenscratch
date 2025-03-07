@@ -123,3 +123,75 @@ module.exports = {
     "postcss-cli": "^11.0.0",
     "tailwindcss": "^3.4.17"
   }
+
+-----
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="./prod.css" rel="stylesheet" />
+</head>
+
+<body>
+  <main>
+    <form class="[&_input:not([type='checkbox']):not([type='radio'])]:w-full">
+      <div class="border rounded [&>*]:px-4 [&>.grid]:my-4 [&>.grid]:gap-4">
+        <div class="bg-slate-100 py-2 outline outline-1 rounded-b outline-slate-200">
+          <p class="not-prose">Your Information</p>
+        </div>
+        <div class="grid grid-2121 [&>*]:self-end">
+          <label>
+            <span>A</span>
+            <input name="a" required />
+          </label>
+          <input name="b" />
+          <input name="c" />
+          <input name="d" />
+        </div>
+        <div class="grid grid-11">
+          <label>
+            <input />
+          </label>
+          <label>
+            <input />
+          </label>
+        </div>
+      </div>
+    </form>
+    <ul class="[&_li]:list-none">
+      <li>
+        <label>
+          <input name="one" type="checkbox" />
+          One
+        </label>
+        <ul>
+          <li>
+            <label>
+              <input name="one-one" type="checkbox" />
+              One.One
+            </label>
+          </li>
+          <li>
+            <label>
+              <input name="one-two" type="checkbox" />
+              One.Two
+            </label>
+          </li>
+          <li>
+            <label>
+              <input name="one-three" type="checkbox" />
+              One.Three
+            </label>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </main>
+  <script src="./utilities/checkbox.js"></script>
+</body>
+
+</html>
